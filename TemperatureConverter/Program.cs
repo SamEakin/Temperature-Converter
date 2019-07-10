@@ -21,36 +21,45 @@ namespace TemperatureConverter
             return input;
         }
 
-        static int convertInput(string input)
+        static int ConvertInput(string input)
         {
+            int temp;
             string rawInput = input.Replace("c", "");
             rawInput = input.Replace("f", "");
-            int temp = Int32.Parse(rawInput);
+            bool check = Int32.TryParse(rawInput, out temp); //fails if input is say "ddf" so trying to use TryParse
+            if (check)
+                Console.WriteLine("See the result below:");
+            else
+            {
+                Console.WriteLine("Conversion cannot be done");
+                //should start from the beginning asking for user input 
+            }
             return temp;
         }
 
-        static void convert()
+        static void Convert()
         {
             string input = getInput();
             Console.WriteLine(input);
-            int temp = 0;
+            int temp = ConvertInput(input);         
+            string result = "0";
             if (input.EndsWith("c"))
             {
-                Console.WriteLine("Celcius");
-                temp = convertInput(input);
+                Console.WriteLine("Celcius");               
+                result = (9 * (temp + 32) / 5) + "F";               
             }
             else if (input.EndsWith("f"))
             {
-                Console.WriteLine("Fahrenheit");
-                temp = convertInput(input);
+                Console.WriteLine("Fahrenheit to Celsius conversion");             
+                result = (5 * (temp - 32) / 9) + "C";
             }
             else
             {
                 Console.WriteLine("Please Enter a valid input format");
-                convert();
+                Convert();
             }
 
-            Console.WriteLine(temp);
+            Console.WriteLine($"Result:{result}");
         }
 
 
@@ -58,7 +67,7 @@ namespace TemperatureConverter
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Welcome to our Temperature Converter!");
-            convert();
+            Convert();
         }
     }
 }
