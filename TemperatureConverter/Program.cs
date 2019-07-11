@@ -21,21 +21,25 @@ namespace TemperatureConverter
             return input;
         }
 
+
         static int ConvertInput(string input)
         {
             int temp;
-            string rawInput = input.Replace("c", "");
+            string rawInput = "";
+            = input.Replace("c", "");
             rawInput = input.Replace("f", "");
-            bool check = Int32.TryParse(rawInput, out temp); //fails if input is say "ddf" so trying to use TryParse
-            if (check)
-                Console.WriteLine("See the result below:");
-            else
+
+            bool goodInput = Int32.TryParse(rawInput, out temp);
+
+            while (!goodInput)
             {
-                Console.WriteLine("Conversion cannot be done");
-                //should start from the beginning asking for user input 
+                Console.WriteLine("Incorrect input format. Try again.");
+                
             }
+
             return temp;
         }
+
 
         static void Convert()
         {
