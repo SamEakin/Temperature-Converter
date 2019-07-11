@@ -54,10 +54,6 @@ namespace TemperatureConverter
                 input = input.Replace("F", "");
                 validInput = true;
             }
-            else
-            {
-                validInput = false;
-            }
 
             int degreeValue;
             validInput = Int32.TryParse(input, out degreeValue);
@@ -95,7 +91,7 @@ namespace TemperatureConverter
         }
 
 
-        public static bool Run()
+        private static bool Run()
         {
             string input = GetInput();
             Temperature inputTemperature = ReadTemperature(input);
