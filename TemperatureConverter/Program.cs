@@ -3,8 +3,6 @@
  * 7/9/19
  *
  * TODO:
- * - Sanitize Inputs
- * - Repeated Inputs
  * - Interface
  */
 
@@ -17,7 +15,7 @@ namespace TemperatureConverter
     {
         private static string GetInput()
         {
-            Console.Write("Enter a Temperature in the format 11f or 11c: ");
+            Console.Write("Enter a Temperature in the format 11f or 11c : ");
             string input = Console.ReadLine().ToUpper();
             Console.WriteLine(input);
             return input;
@@ -41,28 +39,38 @@ namespace TemperatureConverter
             else
             {
                 Console.WriteLine("Incorrect Input Format. Make sure you end with \"F\" or \"C\"");
-                return null;
-                //ReRun();
+                string newInput = GetInput();
+                return ReadTemperature(newInput);
             }
         }
 
 
         private static int RemoveInputUnitIdentifier(string input)
         {
-            input = input.Replace("C", "");
-            input = input.Replace("F", "");
-            int degreeValue;
-            //int degreeValue = Int32.Parse(input);
+            bool validInput = false;
 
-            bool validInput = Int32.TryParse(input, out degreeValue);
+            if (input.Contains("F") || input.Contains("C"))
+            {
+                input = input.Replace("C", "");
+                input = input.Replace("F", "");
+                validInput = true;
+            }
+            else
+            {
+                validInput = false;
+            }
+
+            int degreeValue;
+            validInput = Int32.TryParse(input, out degreeValue);
+
             if (validInput)
             {
                 return degreeValue;
             }
             else
             {
-                Console.WriteLine("Invalid input format. Try again.");
-                return 0;
+                Console.WriteLine("Invalid input format. Make sure you entered numbers followed by F or C.");
+                return RemoveInputUnitIdentifier(GetInput());
             }
         }
 
@@ -71,7 +79,6 @@ namespace TemperatureConverter
         {
             Console.Write("Do you want to continue?(Y/N): ");
             string response = Console.ReadLine().ToUpper();
-            Console.WriteLine(response);
             if (response == "Y")
             {
                 return true;
@@ -81,7 +88,11 @@ namespace TemperatureConverter
                 Console.WriteLine("Thank you for using the application. See you soon!");
                 return false;
             }
-            else return false;
+            else
+            {
+                Console.WriteLine("Huh?");
+                return ReRun();
+            }
         }
 
 
@@ -104,7 +115,6 @@ namespace TemperatureConverter
                keepRunning = Run();
             }
             while (keepRunning);
-
         }
     }
 }
