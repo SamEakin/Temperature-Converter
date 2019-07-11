@@ -3,8 +3,6 @@
  * 7/9/19
  *
  * TODO:
- * - Sanitize Inputs
- * - Repeated Inputs
  * - Interface
  */
 
@@ -14,43 +12,95 @@ namespace TemperatureConverter
 {
     class Program
     {
-        static string getInput()
+        private static string GetInput()
         {
-            Console.WriteLine("Enter a Temperature in the format 11f or 11c");
-            string input = Console.ReadLine();
+            Console.Write("Enter a Temperature in the format 11f or 11c : ");
+            string input = Console.ReadLine().ToUpper();
+            Console.WriteLine(input);
             return input;
         }
 
-        static int convertInput(string input)
-        {
-            string rawInput = input.Replace("c", "");
-            rawInput = input.Replace("f", "");
-            int temp = Int32.Parse(rawInput);
-            return temp;
-        }
 
-        static void convert()
+        private static Temperature ReadTemperature(string input)
         {
-            string input = getInput();
-            Console.WriteLine(input);
-            int temp = 0;
-            if (input.EndsWith("c"))
+            if (input.EndsWith("F"))
             {
-                Console.WriteLine("Celcius");
-                temp = convertInput(input);
+                int degreeValue = RemoveInputUnitIdentifier(input);
+                Fahrenheit inputTemperature = new Fahrenheit(degreeValue);
+                return inputTemperature;
             }
-            else if (input.EndsWith("f"))
+            else if (input.EndsWith("C"))
             {
-                Console.WriteLine("Fahrenheit");
-                temp = convertInput(input);
+                int degreeValue = RemoveInputUnitIdentifier(input);
+                Celsius inputTemperature = new Celsius(degreeValue);
+                return inputTemperature;
             }
             else
             {
-                Console.WriteLine("Please Enter a valid input format");
-                convert();
+                Console.WriteLine("Incorrect Input Format. Make sure you end with \"F\" or \"C\"");
+                string newInput = GetInput();
+                return ReadTemperature(newInput);
+            }
+        }
+
+
+        private static int RemoveInputUnitIdentifier(string input)
+        {
+            bool validInput = false;
+
+            if (input.Contains("F") || input.Contains("C"))
+            {
+                input = input.Replace("C", "");
+                input = input.Replace("F", "");
+                validInput = true;
+            }
+            else
+            {
+                validInput = false;
             }
 
-            Console.WriteLine(temp);
+            int degreeValue;
+            validInput = Int32.TryParse(input, out degreeValue);
+
+            if (validInput)
+            {
+                return degreeValue;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input format. Make sure you entered numbers followed by F or C.");
+                return RemoveInputUnitIdentifier(GetInput());
+            }
+        }
+
+
+        private static bool ReRun()
+        {
+            Console.Write("Do you want to continue?(Y/N): ");
+            string response = Console.ReadLine().ToUpper();
+            if (response == "Y")
+            {
+                return true;
+            }
+            else if (response == "N")
+            {
+                Console.WriteLine("Thank you for using the application. See you soon!");
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Huh?");
+                return ReRun();
+            }
+        }
+
+
+        public static bool Run()
+        {
+            string input = GetInput();
+            Temperature inputTemperature = ReadTemperature(input);
+            Console.WriteLine(inputTemperature.Convert());
+            return ReRun();
         }
 
 
@@ -58,7 +108,12 @@ namespace TemperatureConverter
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Welcome to our Temperature Converter!");
-            convert();
+            bool keepRunning;
+            do
+            {
+               keepRunning = Run();
+            }
+            while (keepRunning);
         }
     }
 }
