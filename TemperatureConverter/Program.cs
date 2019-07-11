@@ -12,67 +12,65 @@ using System;
 
 namespace TemperatureConverter
 {
+
     class Program
     {
-        static string getInput()
+        private static string getInput()
         {
             Console.Write("Enter a Temperature in the format 11f or 11c: ");
-            string input = Console.ReadLine();
+            string input = Console.ReadLine().ToUpper();
+            Console.WriteLine(input);
             return input;
         }
 
-        static string ConvertInput(string input)
+
+        private static int RemoveInputUnitIdentifier(string input)
         {
-            string rawInput = input.ToUpper();
-            rawInput = rawInput.Replace("C", "");
-            rawInput = rawInput.Replace("F", "");
-            return rawInput;
+            input = input.Replace("C", "");
+            input = input.Replace("F", "");
+            int degreeValue = Int32.Parse(input);
+            return degreeValue;
         }
 
-        static void Convert()
+        /*
+        private static string CheckTemperatureUnitType()
         {
-            int temp;
+
+        }
+        */
+
+        /*
+        public static void Convert()
+        {
             string input = getInput();
-            Console.WriteLine(input);
-            string tempString = ConvertInput(input);
-            bool check = Int32.TryParse(tempString, out temp); //fails if input is say "ddf" so trying to use TryParse
-            if (check)
+            int degreeValue = RemoveInputUnitIdentifier(input);
+
+            bool successfulInput = Int32.TryParse(input, out int temp);
+            if (successfulInput)
             {
-                Console.WriteLine("See the result below:");
-                string result = "0";
                 if (input.EndsWith("c"))
                 {
-                    Console.WriteLine("Celcius to Fahrenheit conversion");
-                    result = (9 * (temp + 32) / 5) + "F";
+                    Celsius inputTemperature = new Celsius(degreeValue);
                 }
                 else if (input.EndsWith("f"))
                 {
-                    Console.WriteLine("Fahrenheit to Celsius conversion");
-                    result = (5 * (temp - 32) / 9) + "C";
+                    Fahrenheit inputTemperature = new Fahrenheit(degreeValue);
                 }
-
-                Console.WriteLine("{0} equals to {1}", input, result);
-                // Console.WriteLine($"Result:{result}");
-                ReRun();
-                
-            }
-            else
-            {
-                Console.WriteLine("Conversion cannot be done. Please specify proper format");
-                Convert();
             }
         }
+        */
+
 
         static void ReRun()
         {
             Console.Write("Do you want to continue?(Y/N): ");
-            string response = Console.ReadLine();
-            if (response == "Y" || response == "y")
+            string response = Console.ReadLine().ToUpper();
+            Console.WriteLine(response);
+            if (response == "Y")
             {
-                Convert();
-                Console.ReadLine();
+                //Convert();
             }
-            else if (response == "N" || response == "n")
+            else if (response == "N")
             {
                 Console.WriteLine("Thank you for using the application. See you soon!");
             }
@@ -83,10 +81,13 @@ namespace TemperatureConverter
             }
         }
 
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Welcome to our Temperature Converter!");
-            Convert();
+            //Console.WriteLine("Hello Welcome to our Temperature Converter!");
+            //Convert();
+            //Console.WriteLine("Exitted succesfully.");
+
         }
     }
 }
