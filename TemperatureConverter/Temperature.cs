@@ -11,7 +11,6 @@ namespace TemperatureConverter
         }
 
         public abstract int Convert();
-
     }
 
 

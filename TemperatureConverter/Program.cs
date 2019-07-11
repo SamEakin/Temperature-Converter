@@ -10,7 +10,6 @@ using System;
 
 namespace TemperatureConverter
 {
-
     class Program
     {
         private static string GetInput()
@@ -75,7 +74,7 @@ namespace TemperatureConverter
         }
 
 
-        static bool ReRun()
+        private static bool ReRun()
         {
             Console.Write("Do you want to continue?(Y/N): ");
             string response = Console.ReadLine().ToUpper();
