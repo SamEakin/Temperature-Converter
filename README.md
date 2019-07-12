@@ -58,7 +58,7 @@ The Convert() method is has separate implementations in both the Fahrenheit and 
     // fahrenheitValue == 32
 
 ---
-
+![Console Example Output](https://imgur.com/a/57BPHwD)
 ### Developer Workload Breakdown:
 
 **Chandra:**
@@ -74,3 +74,4 @@ The Convert() method is has separate implementations in both the Fahrenheit and 
         - Refactored the code logic to utilize an OOP structure.
 
         - Wrote unit tests for the Temperature Convert() method.
+        
