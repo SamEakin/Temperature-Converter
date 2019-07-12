@@ -58,12 +58,16 @@ The Convert() method is has separate implementations in both the Fahrenheit and 
     // fahrenheitValue == 32
 
 ---
+
 ![Console Example Output](https://github.com/SamEakin/Temperature-Converter/blob/master/TempConverterPicture.png)
+
 ### Developer Workload Breakdown:
 
 **Chandra:**
 
         - Wrote the code to recieve string input from users and sanitize the formatting.
+        
+        - Error Handling.
 
         - Wrote the code to handle the event looping for consecutive conversion operations. 
         
