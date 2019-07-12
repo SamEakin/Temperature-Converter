@@ -58,7 +58,7 @@ The Convert() method is has separate implementations in both the Fahrenheit and 
     // fahrenheitValue == 32
 
 ---
-![Console Example Output](https://imgur.com/a/57BPHwD)
+![Console Example Output](https://github.com/SamEakin/Temperature-Converter/blob/master/TempConverterPicture.png)
 ### Developer Workload Breakdown:
 
 **Chandra:**
