@@ -34,7 +34,7 @@ namespace TemperatureConverter
         public override int Convert()
         {
             Console.WriteLine("Celcius to Fahrenheit conversion");
-            int result = (this.degrees * 9 / 5) + 32;
+            int result = ((this.degrees * 9) / 5) + 32;
             return result;
         }
     }
